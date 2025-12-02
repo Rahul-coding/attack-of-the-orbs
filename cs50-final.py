@@ -15,14 +15,14 @@ font = pygame.font.SysFont(None, 36) #set default font
 
 
 #set up the image for the razor
-razor_img = pygame.image.load("/Users/rahulagarwal/python/cs50 final/assets/razor.png").convert_alpha()
+razor_img = pygame.image.load("./assets/razor.png").convert_alpha()
 razor_img = pygame.transform.scale(razor_img, (75,  75)) #this scales the image
 
 #set image for soccer ball
-soccer_ball_img = pygame.image.load("/Users/rahulagarwal/python/cs50 final/assets/soccer ball.png").convert_alpha()
+soccer_ball_img = pygame.image.load("./assets/soccer_ball.png").convert_alpha()
 soccer_ball_img = pygame.transform.scale(soccer_ball_img, (90, 90))
 
-player_img = pygame.image.load("/Users/rahulagarwal/python/cs50 final/assets/player.png").convert_alpha()
+player_img = pygame.image.load("./assets/player.png").convert_alpha()
 
 player_sprite_width = 13
 player_sprite_height = 12
@@ -514,10 +514,10 @@ def spawn_enemy(START_TIME):
 
     #fast and weaker enemy
     if(time_since_start >= 15000 and random.randint(0,3) == 1):
-        return Enemy(x, y, speed=ENEMY_DEFAULT_SPEED+2+time_since_start/30000, radius=15, health=ENEMY_DEFAULT_HEALTH-10, color=(0,0,255), damage=3)
+        return Enemy(x, y, speed=ENEMY_DEFAULT_SPEED+time_since_start/30000, radius=15, health=ENEMY_DEFAULT_HEALTH-10, color=(0,0,255), damage=3)
     #stronger and slower enemy
     if(time_since_start >= 30000 and random.randint(0,5) == 1):
-        return Enemy(x, y, speed=ENEMY_DEFAULT_SPEED-0.5, radius=25, health=ENEMY_DEFAULT_HEALTH+10+time_since_start/45000, color=(0,255,0), damage=7)
+        return Enemy(x, y, speed=ENEMY_DEFAULT_SPEED-0.5, radius=25, health=ENEMY_DEFAULT_HEALTH+5+time_since_start/45000, color=(0,255,0), damage=7)
     #dynamic enemy
     if(time_since_start >= 30000 and random.randint(0,2) == 1):
         speed = ENEMY_DEFAULT_SPEED + random.randint(0, 5) + time_since_start/15000
@@ -645,13 +645,12 @@ def home_screen():
         screen.blit(instruction_text, (screen_size[0] // 2 - instruction_text.get_width() // 2, screen_size[1] // 2))
 
         pygame.display.flip()
-
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 exit()
             elif event.type == pygame.KEYDOWN:
-                return 
+                return
 
 
 #death screen
@@ -714,6 +713,7 @@ def game():
     kills = 0
     req_kills = 2
     kills_since_upgrade = 0
+    print("yay");
 
     while True:
         for event in pygame.event.get():
@@ -802,7 +802,6 @@ def game():
         pygame.display.flip()
         #cap FPS
         clock.tick(60)
-
 home_screen()
 game()
 pygame.quit()
