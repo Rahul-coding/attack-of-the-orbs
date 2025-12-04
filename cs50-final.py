@@ -19,7 +19,7 @@ razor_img = pygame.image.load("./assets/razor.png").convert_alpha()
 razor_img = pygame.transform.scale(razor_img, (75,  75)) #this scales the image
 
 #set image for soccer ball
-soccer_ball_img = pygame.image.load("./assets/soccer_ball.png").convert_alpha()
+soccer_ball_img = pygame.image.load("./assets/soccer ball.png").convert_alpha()
 soccer_ball_img = pygame.transform.scale(soccer_ball_img, (90, 90))
 
 player_img = pygame.image.load("./assets/player.png").convert_alpha()
@@ -53,6 +53,7 @@ last_spawn_time = pygame.time.get_ticks() #this is for spawning enemies in incre
 
 #fire delay for the bullet
 fire_delay = 1000
+bullet_damage = 10
 
 #variables for the soccer ball
 soccer_ball_num = 0
@@ -322,12 +323,19 @@ def preview_razor_upgrade():
 
 #upgrades for bullets
 def apply_bullet_upgrade():
-    global fire_delay
+    global fire_delay, bullet_damage
     level = manager.bullet_upgrade_num
     if level == 0:
         description = f'Fire delay {int(fire_delay)/1000} → {int(fire_delay * 0.9)/1000}'
         fire_delay *= 0.9
+    elif level == 1:
+        description =  f'Fire delay {int(fire_delay)/1000} → {int(fire_delay * 0.75)/1000}'
+    elif level == 2:
+        description =  f'Fire delay {int(fire_delay)/1000} → {int(fire_delay * 0.9)/1000}\nBullet damage {bullet_damage} → {bullet_damage + 5}'
+        fire_delay *= 0.75
+        bullet_damage += 5
     level += 1
+    print(level)
     return description, level
 
 def preview_bullet_upgrade():
@@ -335,6 +343,10 @@ def preview_bullet_upgrade():
     description = ""
     if level == 0:
         description = f'Fire delay {int(fire_delay)/1000} → {int(fire_delay * 0.9)/1000}'
+    elif level == 1:
+        description =  f'Fire delay {int(fire_delay)/1000} → {int(fire_delay * 0.75)/1000}'
+    elif level == 2:
+        description =  f'Fire delay {int(fire_delay)/1000} → {int(fire_delay * 0.9)/1000}\nBullet damage {bullet_damage} → {bullet_damage + 5}'
     return description
 
 #soccer upgrades
@@ -624,7 +636,7 @@ def check_bullet_enemy_collision(bullets, enemies):
         for enemy in enemies:
             dist = math.sqrt((bullet.x - enemy.x)**2 + (bullet.y - enemy.y)**2)
             if dist <= enemy.radius + bullet.size:
-                enemy.health -= 10
+                enemy.health -= bullet_damage
                 if enemy.health <= 0:
                     enemies.remove(enemy)
                     return True
@@ -701,8 +713,8 @@ def display_fps():
 
 # main game function
 def game():
-    global x_speed, y_speed, angle_offset, enemies, last_spawn_time, fire_delay, soccer_ball_num, soccer_balls, razor_speed
-
+    global x_speed, y_speed, angle_offset, enemies, last_spawn_time, fire_delay, soccer_ball_num, soccer_balls, razor_speed, bullet_damage
+    print("test")
     START_TIME = pygame.time.get_ticks() #time when game starter
     last_spawn_time = pygame.time.get_ticks()
     last_shot = 0 
@@ -713,6 +725,7 @@ def game():
     kills = 0
     req_kills = 2
     kills_since_upgrade = 0
+    bullet_damage = 10
     print("yay");
 
     while True:
