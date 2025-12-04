@@ -19,7 +19,7 @@ razor_img = pygame.image.load("./assets/razor.png").convert_alpha()
 razor_img = pygame.transform.scale(razor_img, (75,  75)) #this scales the image
 
 #set image for soccer ball
-soccer_ball_img = pygame.image.load("./assets/soccer ball.png").convert_alpha()
+soccer_ball_img = pygame.image.load("./assets/soccer_ball.png").convert_alpha()
 soccer_ball_img = pygame.transform.scale(soccer_ball_img, (90, 90))
 
 player_img = pygame.image.load("./assets/player.png").convert_alpha()
